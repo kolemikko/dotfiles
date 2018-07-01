@@ -12,6 +12,13 @@ Plugin 'tComment'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'rking/ag.vim'
 Plugin 'Lokaltog/powerline'
+" Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdtree'
+" Plugin 'bronson/vim-trailing-whitespace'
+" Plugin 'ervandew/supertab'
+" Plugin 'tristen/vim-sparkup'
+" Plugin 'w0rp/ale'
+" Plugin 'ZoomWin'
 
 call vundle#end()
 
@@ -33,14 +40,11 @@ set showcmd " shot command in bottom bar
 set cursorline " highlight current line
 
 set autoindent
-filetype indent on " load filetype-specific indent files
 
 set clipboard=unnamed "y and p with system clipboard
 set wildmenu " visual autocomplete for command menu
 
 set lazyredraw " redraw only when needed
-
-set showmatch
 
 " in case you forgot to sudo
 cnoremap w!! %!sudo tee > /dev/null %
@@ -57,7 +61,6 @@ set incsearch
 set hlsearch
 set ignorecase
 
-nnoremap <leader><space> :nohlsearch<CR>
 
 " Folding
 
@@ -68,9 +71,21 @@ nnoremap <leader><space> :nohlsearch<CR>
 
 " Movement
 
+" enforce purity
+noremap  <Up> <Nop>
+noremap  <Down> <Nop>
+noremap  <Left> <Nop>
+noremap  <Right> <Nop>
+
+" move vertically by visual line
+nnoremap j gj
+nnoremap k gk
+
 let mapleader=","
 
-" Shortcuts
+" Leader shortcuts
+
+nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>a :Ag
 nnoremap <leader>d :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
