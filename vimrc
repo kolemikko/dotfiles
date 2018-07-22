@@ -4,6 +4,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
+
 Plugin 'flazz/vim-colorschemes'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-fugitive'
@@ -12,12 +13,14 @@ Plugin 'tComment'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'rking/ag.vim'
 Plugin 'Lokaltog/powerline'
-" Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
+Plugin 'w0rp/ale'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'ervandew/supertab'
+Plugin 'python-mode/python-mode'
+" Plugin 'Valloric/YouCompleteMe'
 " Plugin 'bronson/vim-trailing-whitespace'
-" Plugin 'ervandew/supertab'
 " Plugin 'tristen/vim-sparkup'
-" Plugin 'w0rp/ale'
 " Plugin 'ZoomWin'
 
 call vundle#end()
