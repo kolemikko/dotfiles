@@ -5,6 +5,7 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 
+Plugin 'derekwyatt/vim-scala'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-fugitive'
@@ -17,9 +18,9 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'w0rp/ale'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
-Plugin 'python-mode/python-mode'
+Plugin 'bronson/vim-trailing-whitespace'
+" Plugin 'python-mode/python-mode'
 " Plugin 'Valloric/YouCompleteMe'
-" Plugin 'bronson/vim-trailing-whitespace'
 " Plugin 'tristen/vim-sparkup'
 " Plugin 'ZoomWin'
 
@@ -95,11 +96,32 @@ nnoremap <leader>f :NERDTreeFind<CR>
 nnoremap <leader>t :CtrlP<CR>
 nnoremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
+nnoremap <leader>l :ALEFix<CR>
 
 " plugin settings
 let g:ctrlp_match_window = 'order:ttb,max:20'
 let g:NERDSpaceDelims=1
 let g:gitgutter_enabled = 0
+
+let g:ale_set_quickfix = 1
+let g:ale_lint_on_insert_leave = 1
+let g:ale_set_highlights = 1
+
+" Quickfix settings
+noremap <leader>q :call QuickfixToggle()<cr>
+
+let g:quickfix_is_open = 0
+
+function! QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+    else
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction
+noremap <C-k> :cp<CR>
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')

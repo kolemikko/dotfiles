@@ -1,7 +1,7 @@
 # This is Git's configuration file.
 [user]
 	name = Mikko Kolehmainen
-	email = mikko.kolehmainen@gmail.com
+	email = mikko.kolehmainen@tuta.io
 [credential]
 	helper = osxkeychain
 [core]
