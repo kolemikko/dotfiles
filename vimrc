@@ -10,11 +10,13 @@ Plugin 'flazz/vim-colorschemes'
 
 Plugin 'vim-airline/vim-airline'
 Plugin 'ctrlp.vim'
-"Plugin 'rking/ag.vim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'ervandew/supertab'
+Plugin 'w0rp/ale'
+
 "Plugin 'scrooloose/nerdtree'
 
 "Plugin 'Valloric/YouCompleteMe'
-"Plugin 'davidhalter/jedi-vim'
 
 "Plugin 'bronson/vim-trailing-whitespace'
 
@@ -111,9 +113,11 @@ nnoremap <leader>l :ALEFix<CR>
 
 " plugin settings
 let g:ctrlp_match_window = 'order:ttb,max:20'
-let g:gitgutter_enabled = 0
 
 let g:ale_set_quickfix = 1
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_text_changed = 'never'
+
 let g:ale_lint_on_insert_leave = 1
 let g:ale_set_highlights = 1
 
