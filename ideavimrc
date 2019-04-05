@@ -1,16 +1,15 @@
-" ideaVIM rc-file 2.4.2019 (Windows10)
+" ideaVIM rc-file 2.4.2019
 
 " plugins
 set surround
 
-" inital settings
+" initial settings
 set clipboard=unnamed,autoselect
 set hlsearch
 set ignorecase
 set incsearch
 set smartcase
 set showmode
-
 
 " commenting out
 nnoremap cc :action CommentByLineComment<CR>
@@ -25,12 +24,6 @@ vnoremap == :action ReformatCode<CR>
 gnoremap < <gv
 vnoremap > >gv
 
-" Movement
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
-map <c-h> <c-w>h
-
 " move vertically by visual line
 nnoremap j gj
 nnoremap k gk
@@ -40,11 +33,6 @@ noremap  <Up> <Nop>
 noremap  <Down> <Nop>
 noremap  <Left> <Nop>
 noremap  <Right> <Nop>
-
-" switch between tabs
-map <Leader>n <esc>:tabprevious<CR>
-map <Leader>m <esc>:tabnext<CR>
-
 
 let mapleader=","
 
