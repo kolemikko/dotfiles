@@ -1,2 +1,2 @@
 # dotfiles
-The epic configuration disaster.
+Mostly vim configurations for now...
