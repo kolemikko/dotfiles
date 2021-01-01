@@ -1,8 +1,0 @@
-# This is Git's configuration file.
-[user]
-	name = Mikko Kolehmainen
-	email = mikko.kolehmainen@tuta.io
-[credential]
-	helper = osxkeychain
-[core]
-	editor = /usr/bin/vim
