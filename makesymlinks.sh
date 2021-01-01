@@ -1,6 +1,6 @@
 #!/bin/bash
 
-files=".vimrc .ideavimrc"
+files="vimrc ideavimrc"
 
 # create dotfiles_old in homedir
 echo "Creating $olddir for backup of any existing dotfiles in ~"
