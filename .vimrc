@@ -1,5 +1,4 @@
-" vimrc optimized for Python 31.03.2019
-"
+
 " configure Vundle
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -7,23 +6,13 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'flazz/vim-colorschemes'
-
 Plugin 'vim-airline/vim-airline'
 Plugin 'ctrlp.vim'
 Plugin 'davidhalter/jedi-vim'
-Plugin 'ervandew/supertab'
-Plugin 'w0rp/ale'
-
-"Plugin 'scrooloose/nerdtree'
-
-"Plugin 'Valloric/YouCompleteMe'
-
-"Plugin 'bronson/vim-trailing-whitespace'
 
 call vundle#end()
 
 " initial settings
-
 set encoding=utf-8
 set nocompatible
 syntax enable
@@ -65,12 +54,6 @@ set smartcase
 set nobackup
 set nowritebackup
 set noswapfile
-
-" Folding
-" set foldenable
-" set foldlevelstart=10
-" set foldnestmax=10
-" set foldmethod=indent
 
 " better indentation
 vnoremap < <gv
@@ -114,17 +97,6 @@ nnoremap <leader>l :ALEFix<CR>
 " plugin settings
 let g:ctrlp_match_window = 'order:ttb,max:20'
 
-let g:ale_set_quickfix = 1
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_linters = {'python': ['pylint'],}
-let g:airline#extensions#ale#enabled = 1
-
-let g:ale_lint_on_insert_leave = 1
-let g:ale_set_highlights = 1
-
-"let g:NERDSpaceDelims=1
-
 " Quickfix settings
 noremap <leader>q :call QuickfixToggle()<cr>
 
@@ -139,13 +111,3 @@ function! QuickfixToggle()
     endif
 endfunction
 noremap <C-k> :cp<CR>
-
-
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-if executable('ag')
-  " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
- " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
