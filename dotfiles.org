@@ -1,0 +1,111 @@
+#+TITLE: Dotfiles configuration
+
+* Vim
+
+#+begin_src sh :tangle ../.vimrc
+
+  "" initial settings
+  set encoding=utf-8
+  set nocompatible
+  syntax enable
+  set timeoutlen=1000 ttimeoutlen=0
+  set autoread
+
+  set tabstop=4
+  set softtabstop=2
+  set shiftwidth=4
+  set shiftround
+  set expandtab
+
+  filetype indent on
+  filetype on
+  filetype plugin on
+
+  set number
+  set ruler
+
+  set wildmenu
+
+  set mouse=a
+  set bs=2
+  set clipboard=unnamed
+  set history=700
+  set undolevels=700
+
+  "" Searching
+  set hlsearch
+  set ignorecase
+  set incsearch
+  set smartcase
+
+  "" backup and swap settings
+  set nobackup
+  set nowritebackup
+  set noswapfile
+
+  "" better indentation
+  vnoremap < <gv
+  vnoremap > >gv
+
+  "" Movement
+  map <c-j> <c-w>j
+  map <c-k> <c-w>k
+  map <c-l> <c-w>l
+  map <c-h> <c-w>h
+
+  "" move vertically by visual line
+  nnoremap j gj
+  nnoremap k gk
+
+  "" switch between tabs
+  map <Leader>, <esc>:tabprevious<CR>
+  map <Leader>. <esc>:tabnext<CR>
+
+  let mapleader=","
+
+  "" Leader shortcuts
+  vnoremap <Leader>s :sort n<CR>
+  nnoremap <leader><space> :nohlsearch<CR>
+
+#+end_src
+
+* Ideavim
+
+#+begin_src sh :tangle ../.ideavimrc
+
+  "" initial settings
+  set clipboard=unnamed,autoselect
+  set hlsearch
+  set ignorecase
+  set incsearch
+  set smartcase
+  set showmode
+
+  "" plugins
+  set surround
+
+  "" commenting out
+  nnoremap cc :action CommentByLineComment<CR>
+  vnoremap cc :action CommentByLineComment<CR>
+
+  "" random remaps
+  nnoremap gb :action JumpToLastChange<CR>
+  nnoremap == :action ReformatCode<CR>
+  vnoremap == :action ReformatCode<CR>
+
+  "" better indentation
+  gnoremap < <gv
+  vnoremap > >gv
+
+  "" move vertically by visual line
+  nnoremap j gj
+  nnoremap k gk
+
+  let mapleader=","
+
+  "" Leader shortcuts
+  vnoremap <Leader>s :sort n<CR>
+  nnoremap <leader><space> :nohlsearch<CR>
+  nnoremap <leader>q :action ShowIntentionActions<CR>
+
+#+end_src
