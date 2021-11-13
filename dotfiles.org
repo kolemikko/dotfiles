@@ -3,7 +3,6 @@
 * Vim
 
 #+begin_src sh :tangle ../.vimrc
-
   "" initial settings
   set encoding=utf-8
   set nocompatible
@@ -16,14 +15,8 @@
   set shiftwidth=4
   set shiftround
   set expandtab
-
-  filetype indent on
-  filetype on
-  filetype plugin on
-
   set number
   set ruler
-
   set wildmenu
 
   set mouse=a
@@ -31,6 +24,10 @@
   set clipboard=unnamed
   set history=700
   set undolevels=700
+
+  filetype indent on
+  filetype on
+  filetype plugin on
 
   "" Searching
   set hlsearch
@@ -57,22 +54,20 @@
   nnoremap j gj
   nnoremap k gk
 
+  let mapleader=","
+
   "" switch between tabs
   map <Leader>, <esc>:tabprevious<CR>
   map <Leader>. <esc>:tabnext<CR>
 
-  let mapleader=","
-
   "" Leader shortcuts
   vnoremap <Leader>s :sort n<CR>
   nnoremap <leader><space> :nohlsearch<CR>
-
 #+end_src
 
 * Ideavim
 
 #+begin_src sh :tangle ../.ideavimrc
-
   "" initial settings
   set clipboard=unnamed,autoselect
   set hlsearch
@@ -84,15 +79,6 @@
   "" plugins
   set surround
 
-  "" commenting out
-  nnoremap cc :action CommentByLineComment<CR>
-  vnoremap cc :action CommentByLineComment<CR>
-
-  "" random remaps
-  nnoremap gb :action JumpToLastChange<CR>
-  nnoremap == :action ReformatCode<CR>
-  vnoremap == :action ReformatCode<CR>
-
   "" better indentation
   gnoremap < <gv
   vnoremap > >gv
@@ -100,12 +86,4 @@
   "" move vertically by visual line
   nnoremap j gj
   nnoremap k gk
-
-  let mapleader=","
-
-  "" Leader shortcuts
-  vnoremap <Leader>s :sort n<CR>
-  nnoremap <leader><space> :nohlsearch<CR>
-  nnoremap <leader>q :action ShowIntentionActions<CR>
-
 #+end_src
