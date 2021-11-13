@@ -94,20 +94,39 @@
 #+begin_src sh :tangle ../.config/sway/config
    set $mod Mod4
    # Home row direction keys, like vim
-   #set $left h
-   #set $down j
-   #set $up k
-   #set $right l
+   set $left h
+   set $down j
+   set $up k
+   set $right l
 
    # Your preferred terminal emulator
-   set $term terminal
+   set $term gnome-terminal
    # on the original workspace that the command was run on.
    set $menu dmenu_path | dmenu | xargs swaymsg exec --
 
    include /etc/sway/config-vars.d/*
 
    # Default wallpaper
-   output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+   output * bg /home/mikko/Downloads/wallpaper.jpg fill
+#+end_src
+
+** Output settings
+
+#+begin_src sh :tangle ../.config/sway/config
+  output eDP-1 scale 1.6
+#+end_src
+
+** Input settings
+
+#+begin_src sh :tangle ../.config/sway/config
+  input * {
+      xkb_layout "us,us(intl)"
+      xkb_options "grp:alt_space_toggle, caps:escape"
+  }
+
+  input type:touchpad {
+      natural_scroll enabled
+  }
 #+end_src
 
 ** Key bindings
@@ -125,10 +144,17 @@
   floating_modifier $mod normal
 
   # Reload the configuration file
-  bindsym $mod+Shift+c reload
+  bindsym $mod+Shift+r reload
 
   # Exit sway (logs you out of your Wayland session)
   bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit?' -b 'Yes, exit sway' 'swaymsg exit'
+
+  bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+  bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+  bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+  bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+  bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+  bindsym XF86MonBrightnessDown exec brightnessctl set -5%
 #+end_src
 
 ** Moving around
@@ -197,7 +223,7 @@
   bindsym $mod+f fullscreen
 
   # Toggle the current focus between tiling and floating mode
-  bindsym $mod+Shift+space floating toggle
+  bindsym $mod+t floating toggle
 
   # Swap focus between the tiling area and the floating area
   bindsym $mod+space focus mode_toggle
@@ -236,22 +262,191 @@
    bindsym $mod+r mode "resize"
 #+end_src
 
+** Window appearance
+
+#+begin_src sh :tangle ../.config/sway/config
+  default_border none
+  for_window [app_id="^.*"] opacity 1
+  default_floating_border pixel 2
+#+end_src
+
 ** Status bar
 
 #+begin_src sh :tangle ../.config/sway/config
-   bar {
-       position top
+  bar {
+      swaybar_command waybar
+  }
 
-       # When the status_command prints a new line to stdout, swaybar updates.
-       # The default just shows the current date and time.
-       status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
+  include /etc/sway/config.d/*
+#+end_src
 
-       colors {
-           statusline #ffffff
-           background #323232
-           inactive_workspace #32323200 #32323200 #5c5c5c
-       }
-   }
+** Clipman
 
-   include /etc/sway/config.d/*
+#+begin_src sh :tangle ../.config/sway/config
+  exec wl-paste -t text --watch clipman store --no-persist
+#+end_src
+
+
+* Waybar
+** Config
+
+#+begin_src sh :tangle ../.config/waybar/config
+  {
+      "layer": "top",
+      "modules-left": ["sway/workspaces", "sway/mode"],
+      "modules-center": ["sway/window"],
+      "modules-right": ["pulseaudio","backlight", "sway/language", "battery", "network", "clock", "tray"],
+      "sway/mode": {
+          "format": "<span style=\"italic\">{}</span>"
+      },
+ "tray": {
+          // "icon-size": 21,
+          "spacing": 10
+      },
+      "clock": {
+          // "timezone": "America/New_York",
+          "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+          "format-alt": "{:%Y-%m-%d}"
+      },
+      "backlight": {
+          // "device": "acpi_video1",
+          "format": "{percent}% {icon}",
+          "format-icons": ["", ""]
+      },
+      "battery": {
+          "states": {
+              // "good": 95,
+              "warning": 30,
+              "critical": 15
+          },
+          "format": "{capacity}% {icon}",
+          "format-charging": "{capacity}% ",
+          "format-plugged": "{capacity}% ",
+          "format-alt": "{time} {icon}",
+          // "format-good": "", // An empty format will hide the module
+          // "format-full": "",
+          "format-icons": ["", "", "", "", ""]
+      },
+      "network": {
+          // "interface": "wlp2*", // (Optional) To force the use of this interface
+          "format-wifi": "{essid} ({signalStrength}%) ",
+          "format-ethernet": "{ipaddr}/{cidr} ",
+          "tooltip-format": "{ifname} via {gwaddr} ",
+          "format-linked": "{ifname} (No IP) ",
+          "format-disconnected": "Disconnected ⚠",
+          "format-alt": "{ifname}: {ipaddr}/{cidr}"
+      },
+      "pulseaudio": {
+          // "scroll-step": 1, // %, can be a float
+          "format": "{volume}% {icon} {format_source}",
+          "format-bluetooth": "{volume}% {icon} {format_source}",
+          "format-bluetooth-muted": " {icon} {format_source}",
+          "format-muted": " {format_source}",
+          "format-source": "{volume}% ",
+          "format-source-muted": "",
+          "format-icons": {
+              "headphone": "",
+              "hands-free": "",
+              "headset": "",
+              "phone": "",
+              "portable": "",
+              "car": "",
+              "default": ["", "", ""]
+          },
+          "on-click": "pavucontrol"
+      }
+  }
+#+end_src
+
+** Stylesheet
+
+#+begin_src css :tangle ../.config/waybar/style.css
+  ,*{
+      color: black;
+      border: none;
+      border-radius: 0;
+      font-family: "Ubuntu Nerd Font";
+      font-size: 13px;
+      min-height: 0;
+  }
+
+  window#waybar {
+      background: transparent;
+  }
+
+  #window {
+      font-weight: bold;
+      font-family: "Ubuntu";
+  }
+
+  #workspaces {
+      padding: 0 5px;
+  }
+
+  #workspaces button {
+      padding: 0 5px;
+      background: transparent;
+      border-top: 2px solid transparent;
+  }
+
+  #workspaces button.focused {
+      color: #c9545d;
+      border-top: 2px solid #c9545d;
+  }
+
+  #mode {
+      background: #64727D;
+      border-bottom: 3px solid white;
+  }
+
+  #clock, #battery, #backlight, #network, #pulseaudio, #tray, #mode {
+      padding: 0 3px;
+      margin: 0 2px;
+  }
+
+  #clock {
+      font-weight: bold;
+  }
+
+  #battery {
+  }
+
+  #battery icon {
+      color: red;
+  }
+
+  #battery.charging {
+  }
+
+  @keyframes blink {
+      to {
+          background-color: #ffffff;
+          color: black;
+      }
+  }
+
+  #battery.warning:not(.charging) {
+      color: white;
+      animation-name: blink;
+      animation-duration: 0.5s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+  }
+
+  #network {
+  }
+
+  #network.disconnected {
+      background: #f53c3c;
+  }
+
+  #pulseaudio {
+  }
+
+  #pulseaudio.muted {
+  }
+
+  #tray {
+  }
 #+end_src
