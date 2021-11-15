@@ -153,8 +153,8 @@
   bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
   bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
   bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-  bindsym XF86MonBrightnessUp exec brightnessctl set +5%
-  bindsym XF86MonBrightnessDown exec brightnessctl set -5%
+  bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
+  bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 #+end_src
 
 ** Moving around
@@ -266,7 +266,7 @@
 
 #+begin_src sh :tangle ../.config/sway/config
   default_border none
-  for_window [app_id="^.*"] opacity 1
+  for_window [app_id="^.*"] opacity 0.93
   default_floating_border pixel 2
 #+end_src
 
@@ -291,71 +291,69 @@
 ** Config
 
 #+begin_src sh :tangle ../.config/waybar/config
-  {
-      "layer": "top",
-      "modules-left": ["sway/workspaces", "sway/mode"],
-      "modules-center": ["sway/window"],
-      "modules-right": ["pulseaudio","backlight", "sway/language", "battery", "network", "clock", "tray"],
-      "sway/mode": {
-          "format": "<span style=\"italic\">{}</span>"
-      },
- "tray": {
-          // "icon-size": 21,
-          "spacing": 10
-      },
-      "clock": {
-          // "timezone": "America/New_York",
-          "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-          "format-alt": "{:%Y-%m-%d}"
-      },
-      "backlight": {
-          // "device": "acpi_video1",
-          "format": "{percent}% {icon}",
-          "format-icons": ["", ""]
-      },
-      "battery": {
-          "states": {
-              // "good": 95,
-              "warning": 30,
-              "critical": 15
-          },
-          "format": "{capacity}% {icon}",
-          "format-charging": "{capacity}% ",
-          "format-plugged": "{capacity}% ",
-          "format-alt": "{time} {icon}",
-          // "format-good": "", // An empty format will hide the module
-          // "format-full": "",
-          "format-icons": ["", "", "", "", ""]
-      },
-      "network": {
-          // "interface": "wlp2*", // (Optional) To force the use of this interface
-          "format-wifi": "{essid} ({signalStrength}%) ",
-          "format-ethernet": "{ipaddr}/{cidr} ",
-          "tooltip-format": "{ifname} via {gwaddr} ",
-          "format-linked": "{ifname} (No IP) ",
-          "format-disconnected": "Disconnected ⚠",
-          "format-alt": "{ifname}: {ipaddr}/{cidr}"
-      },
-      "pulseaudio": {
-          // "scroll-step": 1, // %, can be a float
-          "format": "{volume}% {icon} {format_source}",
-          "format-bluetooth": "{volume}% {icon} {format_source}",
-          "format-bluetooth-muted": " {icon} {format_source}",
-          "format-muted": " {format_source}",
-          "format-source": "{volume}% ",
-          "format-source-muted": "",
-          "format-icons": {
-              "headphone": "",
-              "hands-free": "",
-              "headset": "",
-              "phone": "",
-              "portable": "",
-              "car": "",
-              "default": ["", "", ""]
-          },
-          "on-click": "pavucontrol"
-      }
-  }
+   {
+       "layer": "top",
+       "modules-left": ["sway/workspaces", "sway/mode"],
+       "modules-center": ["sway/window"],
+       "modules-right": ["pulseaudio","backlight", "sway/language", "battery", "network", "clock", "tray"],
+       "sway/mode": {
+           "format": "<span style=\"italic\">{}</span>"
+       },
+  "tray": {
+           "icon-size": 20,
+           "spacing": 10
+       },
+       "clock": {
+           "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+           "format-alt": "{:%Y-%m-%d}"
+       },
+       "backlight": {
+           // "device": "acpi_video1",
+           "format": "{percent}% {icon}",
+           "format-icons": ["", ""]
+       },
+       "battery": {
+           "states": {
+               // "good": 95,
+               "warning": 30,
+               "critical": 15
+           },
+           "format": "{capacity}% {icon}",
+           "format-charging": "{capacity}% ",
+           "format-plugged": "{capacity}% ",
+           "format-alt": "{time} {icon}",
+           // "format-good": "", // An empty format will hide the module
+           // "format-full": "",
+           "format-icons": ["", "", "", "", ""]
+       },
+       "network": {
+           // "interface": "wlp2*", // (Optional) To force the use of this interface
+           "format-wifi": "{essid} ({signalStrength}%) ",
+           "format-ethernet": "{ipaddr}/{cidr} ",
+           "tooltip-format": "{ifname} via {gwaddr} ",
+           "format-linked": "{ifname} (No IP) ",
+           "format-disconnected": "Disconnected ⚠",
+           "format-alt": "{ifname}: {ipaddr}/{cidr}"
+       },
+       "pulseaudio": {
+           "format": "{volume}% {icon} {format_source}",
+           "format-bluetooth": "{volume}% {icon} {format_source}",
+           "format-bluetooth-muted": " {icon} {format_source}",
+           "format-muted": " {format_source}",
+           "format-source": "{volume}% ",
+           "format-source-muted": "",
+           "format-icons": {
+               "headphone": "",
+               "hands-free": "",
+               "headset": "",
+               "phone": "",
+               "portable": "",
+               "car": "",
+               "default": ["", "", ""]
+           },
+           "on-click": "pavucontrol"
+       }
+   }
 #+end_src
 
 ** Stylesheet
