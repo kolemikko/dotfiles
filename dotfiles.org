@@ -60,7 +60,7 @@
   bspc config gapless_monocle      true
 #+end_src
 
-***** Sxhkdrc
+*** Sxhkdrc
 
 #+begin_src sh :tangle ../.config/sxhkd/sxhkdrc :mkdirp yes
   super + Return
