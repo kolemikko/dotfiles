@@ -1,7 +1,200 @@
 #+TITLE: Dotfiles configuration
 
-* Alacritty
-** Window
+* GUI
+** Xinitrc
+
+#+begin_src sh :tangle ../.xinitrc :shebang "#!/bin/sh"
+  userresources=$HOME/.Xresources
+  usermodmap=$HOME/.Xmodmap
+  sysresources=/etc/X11/xinit/.Xresources
+  sysmodmap=/etc/X11/xinit/.Xmodmap
+
+  # merge in defaults and keymaps
+
+  if [ -f $sysresources ]; then
+      xrdb -merge $sysresources
+  fi
+
+  if [ -f $sysmodmap ]; then
+      xmodmap $sysmodmap
+  fi
+
+  if [ -f "$userresources" ]; then
+      xrdb -merge "$userresources"
+  fi
+
+  if [ -f "$usermodmap" ]; then
+      xmodmap "$usermodmap"
+  fi
+
+  # start some nice programs
+  if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+   for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+    [ -x "$f" ] && . "$f"
+   done
+   unset f
+  fi
+
+  exec bspwm
+#+end_src
+
+** Xresources
+
+#+begin_src sh :tangle ../.Xresources
+  Xft.dpi: 140
+#+end_src
+
+** Bspwm
+*** Bspwmrc
+
+#+begin_src sh :tangle ../.config/bspwm/bspwmrc :mkdirp yes :shebang "#!/bin/sh"
+  pgrep -x sxhkd > /dev/null || sxhkd &
+
+  bspc monitor -d I II III IV V VI VII VIII IX X
+
+  bspc config border_width         3
+  bspc config window_gap          16
+
+  bspc config split_ratio          0.52
+  bspc config borderless_monocle   true
+  bspc config gapless_monocle      true
+#+end_src
+
+*** Sxhkdrc
+
+#+begin_src sh :tangle ../.config/sxhkd/sxhkdrc :mkdirp yes
+  super + Return
+          alacritty
+
+  super + @space
+          ulauncher
+
+  # make sxhkd reload its configuration files:
+  super + Escape
+          pkill -USR1 -x sxhkd
+
+  # media keys
+  XF86MonBrightnessUp
+          adjust-brightness +
+
+  XF86MonBrightnessDown
+          adjust-brightness -
+
+  # screenshot
+  Print
+          scrot
+
+  #
+  # bspwm hotkeys
+  #
+
+  # quit/restart bspwm
+  super + alt + {q,r}
+          bspc {quit,wm -r}
+
+  # close and kill
+  super + {_,shift + }w
+          bspc node -{c,k}
+
+  # alternate between the tiled and monocle layout
+  super + m
+          bspc desktop -l next
+
+  # send the newest marked node to the newest preselected node
+  super + y
+          bspc node newest.marked.local -n newest.!automatic.local
+
+  # swap the current node and the biggest window
+  super + g
+          bspc node -s biggest.window
+
+  #
+  # state/flags
+  #
+
+  # set the window state
+  super + {t,shift + t,s,f}
+          bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+  # set the node flags
+  super + ctrl + {m,x,y,z}
+          bspc node -g {marked,locked,sticky,private}
+
+  #
+  # focus/swap
+  #
+
+  # focus the node in the given direction
+  super + {_,shift + }{h,j,k,l}
+          bspc node -{f,s} {west,south,north,east}
+
+  # focus the node for the given path jump
+  super + {p,b,comma,period}
+          bspc node -f @{parent,brother,first,second}
+
+  # focus the next/previous window in the current desktop
+  super + {_,shift + }c
+          bspc node -f {next,prev}.local.!hidden.window
+
+  # focus the next/previous desktop in the current monitor
+  super + bracket{left,right}
+          bspc desktop -f {prev,next}.local
+
+  # focus the last node/desktop
+  super + {grave,Tab}
+          bspc {node,desktop} -f last
+
+  # focus the older or newer node in the focus history
+  super + {o,i}
+          bspc wm -h off; \
+          bspc node {older,newer} -f; \
+          bspc wm -h on
+
+  # focus or send to the given desktop
+  super + {_,shift + }{1-9,0}
+          bspc {desktop -f,node -d} '^{1-9,10}'
+
+  #
+  # preselect
+  #
+
+  # preselect the direction
+  super + ctrl + {h,j,k,l}
+          bspc node -p {west,south,north,east}
+
+  # preselect the ratio
+  super + ctrl + {1-9}
+          bspc node -o 0.{1-9}
+
+  # cancel the preselection for the focused node
+  super + ctrl + space
+          bspc node -p cancel
+
+  # cancel the preselection for the focused desktop
+  super + ctrl + shift + space
+          bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+  #
+  # move/resize
+  #
+
+  # expand a window by moving one of its side outward
+  super + alt + {h,j,k,l}
+          bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+  # contract a window by moving one of its side inward
+  super + alt + shift + {h,j,k,l}
+          bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+  # move a floating window
+  super + {Left,Down,Up,Right}
+          bspc node -v {-20 0,0 20,0 -20,20 0}
+#+end_src
+
+
+* Apps
+** Alacritty
+*** Window
 
 #+begin_src sh :tangle ../.config/alacritty/alacritty.yml
 
@@ -79,7 +272,7 @@
 
 #+end_src
 
-** Fonts
+*** Fonts
 
 #+begin_src sh :tangle ../.config/alacritty/alacritty.yml
 
@@ -148,7 +341,7 @@
 
 #+end_src
 
-** Colors
+*** Colors
 
 #+begin_src sh :tangle ../.config/alacritty/alacritty.yml
 
@@ -298,7 +491,7 @@
 
 #+end_src
 
-** Misc
+*** Misc
 
 #+begin_src sh :tangle ../.config/alacritty/alacritty.yml
 
@@ -401,7 +594,7 @@
 
 #+end_src
 
-** Shell
+*** Shell
 
 #+begin_src sh :tangle ../.config/alacritty/alacritty.yml
 
@@ -482,7 +675,7 @@
 
 #+end_src
 
-** Mouse bindings
+*** Mouse bindings
 
 #+begin_src sh :tangle ../.config/alacritty/alacritty.yml
 
@@ -514,7 +707,7 @@
 
 #+end_src
 
-** Key bindings
+*** Key bindings
 
 #+begin_src sh :tangle ../.config/alacritty/alacritty.yml
 
@@ -830,7 +1023,7 @@
 
 #+end_src
 
-** Debug
+*** Debug
 
 #+begin_src sh :tangle ../.config/alacritty/alacritty.yml
 
@@ -857,7 +1050,7 @@
 
 #+end_src
 
-* Vim
+** Vim
 
 #+begin_src sh :tangle ../.vimrc
   "" initial settings
@@ -922,7 +1115,7 @@
   nnoremap <leader><space> :nohlsearch<CR>
 #+end_src
 
-* Ideavim
+** Ideavim
 
 #+begin_src sh :tangle ../.ideavimrc
   "" initial settings
@@ -945,200 +1138,3 @@
   nnoremap k gk
 #+end_src
 
-* Sway
-** Variables
-
-#+begin_src sh :tangle ../.config/sway/config
-   set $mod Mod4
-   # Home row direction keys, like vim
-   set $left h
-   set $down j
-   set $up k
-   set $right l
-
-   # Your preferred terminal emulator
-   set $term alacritty
-   # on the original workspace that the command was run on.
-   set $menu dmenu_path | dmenu | xargs swaymsg exec --
-
-   include /etc/sway/config-vars.d/*
-
-   # Default wallpaper
-   output * bg /home/mikko/Downloads/wallpaper.jpg fill
-#+end_src
-
-** Output settings
-
-#+begin_src sh :tangle ../.config/sway/config
-  output eDP-1 scale 1.6
-#+end_src
-
-** Input settings
-
-#+begin_src sh :tangle ../.config/sway/config
-  input * {
-      xkb_layout "us,us(intl)"
-      xkb_options "grp:alt_space_toggle, caps:escape"
-  }
-
-  input type:touchpad {
-      natural_scroll enabled
-  }
-#+end_src
-
-** Key bindings
-
-#+begin_src sh :tangle ../.config/sway/config
-  bindsym $mod+Return exec $term
-  bindsym $mod+Shift+q kill
-  bindsym $mod+d exec $menu
-
-  # Drag floating windows by holding down $mod and left mouse button.
-  # Resize them with right mouse button + $mod.
-  # Despite the name, also works for non-floating windows.
-  # Change normal to inverse to use left mouse button for resizing and right
-  # mouse button for dragging.
-  floating_modifier $mod normal
-
-  # Reload the configuration file
-  bindsym $mod+Shift+r reload
-
-  # Exit sway (logs you out of your Wayland session)
-  bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit?' -b 'Yes, exit sway' 'swaymsg exit'
-
-  bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-  bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-  bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-  bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-  bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
-  bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
-#+end_src
-
-** Moving around
-
-#+begin_src sh :tangle ../.config/sway/config
-   # Move your focus around
-   bindsym $mod+$left focus left
-   bindsym $mod+$down focus down
-   bindsym $mod+$up focus up
-   bindsym $mod+$right focus right
-   # Or use $mod+[up|down|left|right]
-   bindsym $mod+Left focus left
-   bindsym $mod+Down focus down
-   bindsym $mod+Up focus up
-   bindsym $mod+Right focus right
-
-   # Move the focused window with the same, but add Shift
-   bindsym $mod+Shift+$left move left
-   bindsym $mod+Shift+$down move down
-   bindsym $mod+Shift+$up move up
-   bindsym $mod+Shift+$right move right
-   # Ditto, with arrow keys
-   bindsym $mod+Shift+Left move left
-   bindsym $mod+Shift+Down move down
-   bindsym $mod+Shift+Up move up
-   bindsym $mod+Shift+Right move right
-#+end_src
-
-** Workspaces
-
-#+begin_src sh :tangle ../.config/sway/config
-  # Switch to workspace
-  bindsym $mod+1 workspace number 1
-  bindsym $mod+2 workspace number 2
-  bindsym $mod+3 workspace number 3
-  bindsym $mod+4 workspace number 4
-  bindsym $mod+5 workspace number 5
-  bindsym $mod+6 workspace number 6
-  bindsym $mod+7 workspace number 7
-  bindsym $mod+8 workspace number 8
-  bindsym $mod+9 workspace number 9
-  bindsym $mod+0 workspace number 10
-
-  # Move focused container to workspace
-  bindsym $mod+Shift+1 move container to workspace number 1
-  bindsym $mod+Shift+2 move container to workspace number 2
-  bindsym $mod+Shift+3 move container to workspace number 3
-  bindsym $mod+Shift+4 move container to workspace number 4
-  bindsym $mod+Shift+5 move container to workspace number 5
-  bindsym $mod+Shift+6 move container to workspace number 6
-  bindsym $mod+Shift+7 move container to workspace number 7
-  bindsym $mod+Shift+8 move container to workspace number 8
-  bindsym $mod+Shift+9 move container to workspace number 9
-  bindsym $mod+Shift+0 move container to workspace number 10
-
-  # Splits
-  bindsym $mod+b splith
-  bindsym $mod+v splitv
-
-  # Switch the current container between different layout styles
-  bindsym $mod+s layout stacking
-  bindsym $mod+w layout tabbed
-  bindsym $mod+e layout toggle split
-
-  # Make the current focus fullscreen
-  bindsym $mod+f fullscreen
-
-  # Toggle the current focus between tiling and floating mode
-  bindsym $mod+t floating toggle
-
-  # Swap focus between the tiling area and the floating area
-  bindsym $mod+space focus mode_toggle
-
-  # Move focus to the parent container
-  bindsym $mod+a focus parent
-#+end_src
-
-** Scratchpad
-
-#+begin_src sh :tangle ../.config/sway/config
-   # Move the currently focused window to the scratchpad
-   bindsym $mod+Shift+minus move scratchpad
-
-   # Show the next scratchpad window or hide the focused scratchpad window.
-   # If there are multiple scratchpad windows, this command cycles through them.
-   bindsym $mod+minus scratchpad show
-
-   ### Resizing containers:
-   mode "resize" {
-       bindsym $left resize shrink width 10px
-       bindsym $down resize grow height 10px
-       bindsym $up resize shrink height 10px
-       bindsym $right resize grow width 10px
-
-       # Ditto, with arrow keys
-       bindsym Left resize shrink width 10px
-       bindsym Down resize grow height 10px
-       bindsym Up resize shrink height 10px
-       bindsym Right resize grow width 10px
-
-       # Return to default mode
-       bindsym Return mode "default"
-       bindsym Escape mode "default"
-   }
-   bindsym $mod+r mode "resize"
-#+end_src
-
-** Window appearance
-
-#+begin_src sh :tangle ../.config/sway/config
-  default_border none
-  for_window [app_id="^.*"] opacity 0.93
-  default_floating_border pixel 2
-#+end_src
-
-** Status bar
-
-#+begin_src sh :tangle ../.config/sway/config
-  bar {
-      swaybar_command waybar
-  }
-
-  include /etc/sway/config.d/*
-#+end_src
-
-** Clipman
-
-#+begin_src sh :tangle ../.config/sway/config
-  exec wl-paste -t text --watch clipman store --no-persist
-#+end_src
