@@ -44,6 +44,19 @@
   Xft.dpi: 140
 #+end_src
 
+** Xmodmap
+
+#+begin_src sh :tangle ../.Xmodmap
+
+  ! natural scrolling
+  pointer = 1 2 3 5 4 7 6 8 9 10 11 12
+
+  ! caps to esc
+  clear lock
+  keycode 66 = Escape
+
+#+end_src
+
 ** Bspwm
 *** Bspwmrc
 
