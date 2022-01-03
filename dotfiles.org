@@ -439,10 +439,10 @@
     # Allow terminal applications to change Alacritty's window title.
     #dynamic_title: true
 
-  scrolling:
+  # scrolling:
     # Maximum number of lines in the scrollback buffer.
     # Specifying '0' will disable scrolling.
-    history: 0
+    # history: 0
 
     # Scrolling distance multiplier.
     #multiplier: 3
