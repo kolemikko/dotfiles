@@ -1252,15 +1252,17 @@
 
 #+end_src
 
-** Vim
+** Neovim
 
-#+begin_src sh :tangle ../.vimrc
+#+begin_src sh :tangle ../.config/nvim/init.vim :mkdirp yes
+
   "" initial settings
   set encoding=utf-8
   set nocompatible
-  syntax enable
   set timeoutlen=1000 ttimeoutlen=0
   set autoread
+  set showmatch
+  syntax enable
 
   set tabstop=4
   set softtabstop=2
@@ -1280,6 +1282,9 @@
   filetype indent on
   filetype on
   filetype plugin on
+
+  "" infinite undo
+  set undofile
 
   "" Searching
   set hlsearch
