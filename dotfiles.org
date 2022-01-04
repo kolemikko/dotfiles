@@ -395,37 +395,6 @@
 #+end_src
 
 * Apps
-** Shells
-*** Fish
-
-#+begin_src sh :tangle ../.config/fish/config.fish :mkdirp yes
-  abbr -a vim nvim
-  abbr -a vimdiff 'nvim -d'
-  abbr -a e 'emacsclient -n -c'
-
-  abbr -a p 'sudo pacman'
-  abbr -a up 'sudo pacman -Syu'
-
-  abbr -a g git
-  abbr -a c cargo
-
-  if command -v exa > /dev/null
-     abbr -a l 'exa'
-     abbr -a ls 'exa'
-     abbr -a ll 'exa -l'
-     abbr -a lll 'exa -la'
-  else
-      abbr -a l 'ls'
-      abbr -a ll 'ls -l'
-      abbr -a lll 'ls -la'
-  end
-
-  if command -v zoxide > /dev/null
-     zoxide init fish | source
-     abbr -a cd z
-  end
-#+end_src
-
 ** Alacritty
 *** Window
 
@@ -1283,6 +1252,66 @@
 
 #+end_src
 
+** Firefox
+
+#+begin_src css :tangle ../.mozilla/firefox/chrome/userChrome.css :mkdirp yes
+  @-moz-document url(chrome://browser/content/browser.xhtml) {
+      /* toolkit.legacyUserProfileCustomizations.stylesheets = true*/
+      #mainPopupSet ~ box { -moz-box-ordinal-group: 10; }
+      #titlebar { -moz-box-ordinal-group: 10; }
+      #urlbar {
+          top: unset !important;
+          bottom: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2) !important;
+          box-shadow: none !important;
+          display: flex !important;
+          flex-direction: column !important;
+      }
+      #urlbar-input-container {
+          order: 2;
+      }
+      #urlbar > .urlbarView {
+          order: 1;
+          border-bottom: 1px solid #666;
+      }
+      #urlbar-results {
+          display: flex;
+          flex-direction: column-reverse;
+      }
+      .search-one-offs { display: none !important; }
+      .tab-background { border-top: none !important; }
+      #navigator-toolbox::after { border: none; }
+      #TabsToolbar .tabbrowser-arrowscrollbox,
+      #tabbrowser-tabs, .tab-stack { min-height: 28px !important; }
+      .tabbrowser-tab { font-size: 80%; }
+      .tab-content { padding: 0 5px; }
+      .tab-close-button .toolbarbutton-icon { width: 12px !important; height: 12px !important; }
+      toolbox[inFullscreen=true] { display: none; }
+  }
+#+end_src
+
+** Ideavim
+
+#+begin_src sh :tangle ../.ideavimrc
+  "" initial settings
+  set clipboard=unnamed,autoselect
+  set hlsearch
+  set ignorecase
+  set incsearch
+  set smartcase
+  set showmode
+
+  "" plugins
+  set surround
+
+  "" better indentation
+  gnoremap < <gv
+  vnoremap > >gv
+
+  "" move vertically by visual line
+  nnoremap j gj
+  nnoremap k gk
+#+end_src
+
 ** Neovim
 
 #+begin_src sh :tangle ../.config/nvim/init.vim :mkdirp yes
@@ -1353,26 +1382,34 @@
   nnoremap <leader><space> :nohlsearch<CR>
 #+end_src
 
-** Ideavim
+** Shells
+*** Fish
 
-#+begin_src sh :tangle ../.ideavimrc
-  "" initial settings
-  set clipboard=unnamed,autoselect
-  set hlsearch
-  set ignorecase
-  set incsearch
-  set smartcase
-  set showmode
+#+begin_src sh :tangle ../.config/fish/config.fish :mkdirp yes
+  abbr -a vim nvim
+  abbr -a vimdiff 'nvim -d'
+  abbr -a e 'emacsclient -n -c'
 
-  "" plugins
-  set surround
+  abbr -a p 'sudo pacman'
+  abbr -a up 'sudo pacman -Syu'
 
-  "" better indentation
-  gnoremap < <gv
-  vnoremap > >gv
+  if command -v exa > /dev/null
+     abbr -a l 'exa'
+     abbr -a ls 'exa'
+     abbr -a ll 'exa -l'
+     abbr -a lll 'exa -la'
+  else
+      abbr -a l 'ls'
+      abbr -a ll 'ls -l'
+      abbr -a lll 'ls -la'
+  end
 
-  "" move vertically by visual line
-  nnoremap j gj
-  nnoremap k gk
+  if command -v zoxide > /dev/null
+     zoxide init fish | source
+     abbr -a cd z
+  end
+
+  abbr -a g git
+  abbr -a c cargo
+
 #+end_src
-
