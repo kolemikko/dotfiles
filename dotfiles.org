@@ -258,10 +258,8 @@
   padding = 1
   module-margin = 1
 
-  font-0 = "Noto Sans Mono:size=12;1"
-  font-1 = "Noto Sans Mono:size=12;1"
-  font-2 = "Noto Sans Symbols:size=12;1"
-  font-3 = "Noto Sans Symbols2:size=12;1"
+  font-0 = "Source Code Pro:size=12;1"
+  font-1 = "Source Code Pro:size=12;1"
 
   modules-left = date bspwm xwindow
   modules-center =
@@ -323,7 +321,6 @@
   label-volume-foreground = ${root.foreground}
   label-volume-underline = #ffb52a
 
-  format-muted-prefix = " "
   format-muted-foreground = ${colors.foreground-alt}
   format-muted-underline = ${colors.alert}
   label-muted = muted
@@ -333,18 +330,11 @@
   interface = wlp0s20f3
   interval = 5.0
 
-  format-connected = <ramp-signal> <label-connected>
+  format-connected = <label-connected>
   format-connected-underline = #9f78e1
   label-connected = %essid%
 
   label-disconnected =
-
-  ramp-signal-0 = 🌧
-  ramp-signal-1 = 🌦
-  ramp-signal-2 = 🌥
-  ramp-signal-3 = 🌤
-  ramp-signal-4 = 🌣
-
 
   [module/battery]
   type = internal/battery
@@ -352,32 +342,14 @@
   adapter = AC
   full-at = 98
 
-  format-charging = <animation-charging> <label-charging>
+  format-charging = <label-charging>
   format-charging-underline = #ffb52a
 
-  format-discharging = <animation-discharging> <label-discharging>
+  format-discharging = <label-discharging>
   format-discharging-underline = ${self.format-charging-underline}
 
-  format-full-prefix = " "
   format-full-prefix-foreground = ${colors.foreground-alt}
   format-full-underline = ${self.format-charging-underline}
-
-  ramp-capacity-0 = 
-  ramp-capacity-1 = 
-  ramp-capacity-2 = 
-  ramp-capacity-foreground = ${colors.foreground-alt}
-
-  animation-charging-0 = 
-  animation-charging-1 = 
-  animation-charging-2 = 
-  animation-charging-foreground = ${colors.foreground-alt}
-  animation-charging-framerate = 750
-
-  animation-discharging-0 = 
-  animation-discharging-1 = 
-  animation-discharging-2 = 
-  animation-discharging-foreground = ${colors.foreground-alt}
-  animation-discharging-framerate = 750
 
 #+end_src
 
