@@ -61,6 +61,8 @@
 *** Bspwmrc
 
 #+begin_src sh :tangle ../.config/bspwm/bspwmrc :mkdirp yes :shebang "#!/bin/sh"
+  xrdb -merge $HOME/.Xresources
+
   pgrep -x sxhkd > /dev/null || sxhkd &
 
   bspc monitor -d I II III IV V VI VII VIII IX X
