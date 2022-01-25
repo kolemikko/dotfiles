@@ -1263,29 +1263,6 @@
   }
 #+end_src
 
-** Ideavim
-
-#+begin_src sh :tangle ../.ideavimrc
-  "" initial settings
-  set clipboard=unnamed,autoselect
-  set hlsearch
-  set ignorecase
-  set incsearch
-  set smartcase
-  set showmode
-
-  "" plugins
-  set surround
-
-  "" better indentation
-  gnoremap < <gv
-  vnoremap > >gv
-
-  "" move vertically by visual line
-  nnoremap j gj
-  nnoremap k gk
-#+end_src
-
 ** Neovim
 
 #+begin_src sh :tangle ../.config/nvim/init.vim :mkdirp yes
