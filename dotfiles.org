@@ -42,6 +42,9 @@
 
 #+begin_src sh :tangle ../.Xresources
   Xft.dpi: 140
+
+  xterm*faceName: Monospace
+  xterm*faceSize: 14
 #+end_src
 
 ** Xmodmap
