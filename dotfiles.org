@@ -45,6 +45,7 @@
 
   xterm*faceName: Monospace
   xterm*faceSize: 14
+  xterm*selectToClipboard: true
 #+end_src
 
 ** Xmodmap
@@ -92,7 +93,10 @@
           ulauncher
 
   Print
-          scrot
+          scrot -F ~/Screenshots/Screenshot_%d-%m-%Y.png
+
+  Shift + Print
+          scrot -s -F ~/Screenshots/Screenshot_%d-%m-%Y.png
 
   XF86MonBrightnessUp
           xbacklight -inc 10
