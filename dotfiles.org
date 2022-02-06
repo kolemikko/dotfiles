@@ -92,10 +92,10 @@
   super + @space
           ulauncher
 
-  Print
+  alt + shift + @p
           scrot -F ~/Screenshots/Screenshot_%d-%m-%Y.png
 
-  Shift + Print
+  alt + @p
           scrot -s -F ~/Screenshots/Screenshot_%d-%m-%Y.png
 
   XF86MonBrightnessUp
