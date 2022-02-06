@@ -95,6 +95,9 @@
   super + @space
           ulauncher
 
+  super + e
+          emacs
+
   alt + shift + @p
           scrot -F ~/Screenshots/Screenshot_%d-%m-%Y.png
 
