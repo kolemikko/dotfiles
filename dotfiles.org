@@ -89,6 +89,9 @@
   super + Return
           alacritty
 
+  super + shift + Return
+          xterm
+
   super + @space
           ulauncher
 
