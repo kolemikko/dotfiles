@@ -67,8 +67,6 @@
 #+begin_src sh :tangle ../.config/bspwm/bspwmrc :mkdirp yes :shebang "#!/bin/sh"
   xrdb -merge $HOME/.Xresources
 
-  pgrep -x sxhkd > /dev/null || sxhkd &
-
   bspc monitor -d I II III IV V VI VII VIII IX X
 
   bspc config border_width         3
@@ -78,6 +76,9 @@
   bspc config borderless_monocle   true
   bspc config gapless_monocle      true
 
+  killall "sxhkd"
+  sxhkd &
+  killall "polybar"
   $HOME/.config/polybar/launch.sh
 #+end_src
 
