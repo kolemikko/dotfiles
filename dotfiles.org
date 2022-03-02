@@ -109,6 +109,12 @@
   alt + shift + @l
           setxkbmap -layout us -variant intl
 
+  alt + @x
+          xrandr --output HDMI-A-0 --rotate normal
+
+  alt + shift + @x
+          xrandr --output HDMI-A-0 --rotate left
+
   XF86MonBrightnessUp
           xbacklight -inc 10
 
