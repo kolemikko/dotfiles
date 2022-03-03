@@ -35,6 +35,8 @@
    unset f
   fi
 
+  xrandr --output HDMI-A-0 --rotate left
+
   exec bspwm
 #+end_src
 
