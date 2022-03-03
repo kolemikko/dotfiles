@@ -271,7 +271,7 @@
 
   [bar/main]
   width = 100%
-  height = 4%
+  height = 3%
   radius = 6.0
   fixed-center = false
   bottom = true
