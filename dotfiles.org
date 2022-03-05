@@ -291,7 +291,7 @@
 
   modules-left = date bspwm xwindow
   modules-center =
-  modules-right = alsa wlan battery
+  modules-right = pulseaudio wlan battery
 
   tray-position = right
   tray-padding = 2
@@ -341,8 +341,8 @@
   label-empty = " %name% "
   label-empty-foreground = #555555
 
-  [module/alsa]
-  type = internal/alsa
+  [module/pulseaudio]
+  type = internal/pulseaudio
 
   format-volume = <label-volume>
   label-volume = VOL %percentage%%
