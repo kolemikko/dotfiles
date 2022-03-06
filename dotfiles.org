@@ -93,7 +93,7 @@
   super + shift + Return
           xterm
 
-  super + @space
+  ctrl + @space
           ulauncher
 
   super + e
