@@ -1375,6 +1375,8 @@
      abbr -a ls 'exa'
      abbr -a ll 'exa -l'
      abbr -a lll 'exa -la'
+     abbr -a lt 'exa --tree --level=2'
+     abbr -a ltt 'exa --tree --level=3'
   else
       abbr -a l 'ls'
       abbr -a ll 'ls -l'
