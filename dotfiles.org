@@ -112,7 +112,7 @@
           setxkbmap -layout us -variant intl
 
   alt + @z
-          Xrandr --Output Hdmi-A-0 --rotate normal
+          xrandr --output HDMI-A-0 --rotate normal
 
   alt + shift + @z
           xrandr --output HDMI-A-0 --rotate left
