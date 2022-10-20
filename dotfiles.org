@@ -258,6 +258,13 @@
 #+end_src
 
 ** Polybar
+
+*** Custom scripts
+
+#+begin_src sh :tangle ../.config/polybar/cpu-temp.sh :mkdirp yes :shebang "#!/bin/sh"
+  sensors | grep "CPU:" | grep "+" | tr -d '+' |  awk '{print $2}'
+#+end_src
+
 *** Config
 
 #+begin_src sh :tangle ../.config/polybar/config :mkdirp yes
@@ -291,7 +298,7 @@
 
   modules-left = date bspwm xwindow
   modules-center =
-  modules-right = pulseaudio wlan battery
+  modules-right = pulseaudio wlan cpu-temp battery
 
   tray-position = right
   tray-padding = 2
@@ -363,6 +370,11 @@
   label-connected = %essid%
 
   label-disconnected =
+
+  [module/cpu-temp]
+  type = custom/script
+  exec = ~/.config/polybar/cpu-temp.sh
+  interval = 1
 
   [module/battery]
   type = internal/battery
